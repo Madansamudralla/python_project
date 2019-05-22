@@ -1,41 +1,50 @@
 import paramiko
-from crontab import CronTab
-import conf
+import config_automation
 import warnings
 
 
 class CronRun:
-    #TODO: clean this up for local and remote cron connections
+
     def __init__(self):
-        if conf.CRON_HOST != 'localhost':
-            self.client = paramiko.SSHClient()
-            self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            # TODO: Clean this up.
-            warnings.filterwarnings(action='ignore', module='.*paramiko.*')
-            self.client.connect(conf.CRON_HOST, 22, conf.CRON_USER, allow_agent=True)
-            self.run_cron_remote('notify_delivery.php')
+        if config_automation.Config.CRON_HOST != 'localhost':
+            try:
+                self.client = paramiko.SSHClient()
+                self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                warnings.filterwarnings(action='ignore', module='.*paramiko.*')
+                self.client.connect(config_automation.Config.CRON_HOST, 22, config_automation.Config.CRON_USER, allow_agent=True)
+            except paramiko.AuthenticationException:
+                raise ConnectionError('Could not connect via SSH Client Make sure you have the proper user in the "config_automation.py" file and that your SSH agent is opened.')
 
-    def run_cron(self, cronname):
-        if conf.CRON_HOST == 'localhost':
-            return self.run_cron_local(cronname)
+    def run_cron(self, cron_name):
+        if config_automation.Config.CRON_HOST == 'localhost':
+            return self.run_cron_local(cron_name)
         else:
-            return self.run_cron_remote(cronname)
+            return self.run_cron_remote(cron_name)
 
-    # TODO: get the execution text.
-    def run_cron_local(self, cronname):
-        if conf.CRON_USER:
-            cron = CronTab(conf.CRON_USER)
-            cron.new('sudo -u ' + conf.CRON_USER + ' /usr/bin/php ' + conf.CRON_PATH + cronname + ' 2>/dev/null')
-            return cron.write()
 
+    # TODO: Clean debugging prints after core is implemented
+    def run_cron_local(self, cron_name):
+        data = []
+        try:
+            if config_automation.Config.CRON_USER:
+                stdin, stdout, stderr = self.client.exec_command('sudo -u ' + config_automation.Config.CRON_USER + ' /usr/bin/php ' + config_automation.Config.CRON_PATH + cron_name + ' 2>/dev/null')
+                for line in stdout:
+                    data.append(line.strip('\n'))
+        finally:
+            self.client.close()
+            print(data)
+        return data
+
+    #TODO: Clean debugging prints after core is implemented
     def run_cron_remote(self, cron_name):
         data = []
-        stdin, stdout, stderr = self.client.exec_command("runcron " + conf.CRON_PATH + cron_name + " accounts:21317")
-        for line in stdout:
-            data.append(line.strip('\n'))
-        self.client.close()
-        print(data)
+        try:
+            stdin, stdout, stderr = self.client.exec_command("runcron " + config_automation.Config.CRON_PATH + cron_name)
+            for line in stdout:
+                data.append(line.strip('\n'))
+        finally:
+            self.client.close()
+            print(data)
         return data
 
 
-sshConn = CronRun()
