@@ -1,6 +1,6 @@
-import pymysql
+import peewee
 import config_automation
-import automation_conf
+import automation_cnf
 
 
 class DbConnection:
@@ -15,11 +15,11 @@ class DbConnection:
         Establishing database connection.
         :return: Connection to automation DB.
         """
-        if self.DB != automation_conf.DATABASE['AUTOMATION']['dbname']:
+        if self.DB != automation_cnf.DATABASE['AUTOMATION']['dbname']:
             raise ValueError("Couldn't not find DB with given name.")
-        conn = pymysql.connect(host=automation_conf.DATABASE['AUTOMATION']['host'],
-                               user=automation_conf.DATABASE['AUTOMATION']['user'],
-                               password=automation_conf.DATABASE['AUTOMATION']['password'],
-                               db=automation_conf.DATABASE['AUTOMATION']['dbname'],
-                               charset='utf8')
+        conn = peewee.mysql.connect(host=automation_cnf.DATABASE['AUTOMATION']['host'],
+                                    user=automation_cnf.DATABASE['AUTOMATION']['user'],
+                                    password=automation_cnf.DATABASE['AUTOMATION']['password'],
+                                    db=automation_cnf.DATABASE['AUTOMATION']['dbname'],
+                                    charset='utf8', )
         return conn
