@@ -3,3 +3,4 @@ selenium=3.141.0
 paramiko
 requests
 peewee
+mysql

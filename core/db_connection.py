@@ -17,9 +17,9 @@ class DbConnection:
         """
         if self.DB != automation_cnf.DATABASE['AUTOMATION']['dbname']:
             raise ValueError("Couldn't not find DB with given name.")
-        conn = peewee.mysql.connect(host=automation_cnf.DATABASE['AUTOMATION']['host'],
-                                    user=automation_cnf.DATABASE['AUTOMATION']['user'],
-                                    password=automation_cnf.DATABASE['AUTOMATION']['password'],
-                                    db=automation_cnf.DATABASE['AUTOMATION']['dbname'],
-                                    charset='utf8', )
-        return conn
+        mysql = peewee.mysql.connect(host=automation_cnf.DATABASE['AUTOMATION']['host'],
+                                     user=automation_cnf.DATABASE['AUTOMATION']['user'],
+                                     password=automation_cnf.DATABASE['AUTOMATION']['password'],
+                                     db=automation_cnf.DATABASE['AUTOMATION']['dbname'],
+                                     charset='utf8', )
+        return mysql
