@@ -40,7 +40,7 @@ class Merchant:
                       "WHERE accounts.`IdAccount`= " + str(id_account)
                 cursor.execute(sql)
                 result = cursor.fetchone()
-                return result
+                return result[0]
         finally:
             self.CONN.connect_db().close()
 
@@ -58,6 +58,6 @@ class Merchant:
                       "WHERE accounts.`IdAccount`= " + str(id_account)
                 cursor.execute(sql)
                 result = cursor.fetchone()
-                return result
+                return result[0]
         finally:
             self.CONN.connect_db().close()
