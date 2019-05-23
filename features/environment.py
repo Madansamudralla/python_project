@@ -1,41 +1,19 @@
-from behave import *
 from selenium import webdriver
+import config_automation
+
+HOST = "http://" + config_automation.Config.SELENIUM_HOST + ":" + str(config_automation.Config.SELENIUM_PORT) + "/wd/hub"
+
+# TODO - research for HOST variable usage in old framework
 
 
-# class Environment:
-#     CHROME_OPTIONS = None
-#
-#     def __init__(self):
-#         self.CHROME_OPTIONS = webdriver.ChromeOptions()
-#         self.CHROME_OPTIONS.accept_untrusted_certs = True
-#         self.CHROME_OPTIONS.assume_untrusted_cert_issuer = True
-#         self.CHROME_OPTIONS.add_argument("--no-sandbox")
-#         self.CHROME_OPTIONS.add_argument("--disable-impl-side-painting")
-#         self.CHROME_OPTIONS.add_argument("--disable-setuid-sandbox")
-#         self.CHROME_OPTIONS.add_argument("--disable-seccomp-filter-sandbox")
-#         self.CHROME_OPTIONS.add_argument("--disable-breakpad")
-#         self.CHROME_OPTIONS.add_argument("--disable-client-side-phishing-detection")
-#         self.CHROME_OPTIONS.add_argument("--disable-cast")
-#         self.CHROME_OPTIONS.add_argument("--disable-cast-streaming-hw-encoding")
-#         self.CHROME_OPTIONS.add_argument("--disable-cloud-import")
-#         self.CHROME_OPTIONS.add_argument("--disable-popup-blocking")
-#         self.CHROME_OPTIONS.add_argument("--ignore-certificate-errors")
-#         self.CHROME_OPTIONS.add_argument("--disable-session-crashed-bubble")
-#         self.CHROME_OPTIONS.add_argument("--disable-ipv6")
-#         self.CHROME_OPTIONS.add_argument("--allow-http-screen-capture")
-#         self.CHROME_OPTIONS.add_argument("--start-maximized")
-
-    # @staticmethod
 def before_scenario(context, scenario):
-    # options = self.CHROME_OPTIONS
-    # context.driver = webdriver.Chrome('.\chromedriver', chrome_options=options)
-    # context.driver = webdriver.Chrome()
-    # yield
-    # context.driver.quit()
-    context.driver = browser_set_up("chrome")
+    if 'web' in context.tags:
+        context.browser = webdriver.Chrome()
+        context.browser.maximize_window()
+        # context.browser.get(url=HOST)
+        context.browser.set_page_load_timeout(30)
 
-def browser_set_up(browser):
-    if browser == "chrome":
-        driver = webdriver.Chrome("http://localhost:4444/wd/hub")
-        driver.maximize_window()
-        return driver
+
+def after_scenario(context, scenario):
+    if 'web' in context.tags:
+        context.browser.quit()
