@@ -1,9 +1,11 @@
 from selenium import webdriver
 import config_automation
 
-HOST = "http://" + config_automation.Config.SELENIUM_HOST + ":" + str(config_automation.Config.SELENIUM_PORT) + "/wd/hub"
+HOST = "http://" + config_automation.Config.SELENIUM_HOST + ":" \
+       + str(config_automation.Config.SELENIUM_PORT) + "/wd/hub"
 
 # TODO - research for HOST variable usage in old framework
+# TODO - research how to run steps from different path steps directory
 
 
 def before_scenario(context, scenario):
