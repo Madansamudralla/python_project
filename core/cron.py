@@ -23,8 +23,6 @@ class CronRun:
         else:
             return self.run_cron_remote(cron_name)
 
-    # TODO: Clean debugging prints after core is implemented
-
     def run_cron_local(self, cron_name):
         data = []
         try:
@@ -36,10 +34,7 @@ class CronRun:
                     data.append(line.strip('\n'))
         finally:
             self.client.close()
-            print(data)
         return data
-
-    # TODO: Clean debugging prints after core is implemented
 
     def run_cron_remote(self, cron_name):
         data = []
@@ -50,6 +45,5 @@ class CronRun:
                 data.append(line.strip('\n'))
         finally:
             self.client.close()
-            print(data)
         return data
 
