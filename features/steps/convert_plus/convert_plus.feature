@@ -1,4 +1,4 @@
-@all @duckduckgo
+@all
 Feature: DuckDuckGo Web Browsing
   As a web surfer,
   I want to find information online,
