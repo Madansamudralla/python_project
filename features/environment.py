@@ -9,13 +9,13 @@ HOST = "http://" + config_automation.Config.SELENIUM_HOST + ":" \
 
 
 def before_scenario(context, scenario):
-    if 'web' in context.tags:
-        context.browser = webdriver.Chrome()
+    if 'all' in context.tags:
+        context.browser = webdriver.Chrome('.\chromedriver')
         context.browser.maximize_window()
         # context.browser.get(url=HOST)
         context.browser.set_page_load_timeout(30)
 
 
 def after_scenario(context, scenario):
-    if 'web' in context.tags:
+    if 'all' in context.tags:
         context.browser.quit()

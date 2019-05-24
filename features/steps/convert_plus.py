@@ -18,7 +18,7 @@ def step_impl(context, phrase):
 
 @then('results are shown for "{phrase}"')
 def step_impl(context, phrase):
-    links_div = context.browser.find_element_by_id('link')
+    links_div = context.browser.find_element_by_id('links')
     assert len(links_div.find_elements_by_xpath('//div')) > 0
     search_input = context.browser.find_element_by_name('q')
     assert search_input.get_attribute('value') == phrase
