@@ -1,4 +1,5 @@
 import automation_cnf
+import os
 
 
 class Config:
@@ -29,3 +30,11 @@ class Config:
     USER = "automation"
     PUBLIC_KEY = "/home/automation/www/automation/conf/automation_publicOpen"
     PRIVATE_KEY = "/home/automation/www/automation/conf/automation_privateOpen"
+
+    # Screenshots settings
+    # Create a folder for failed screenshots if it doesn’t exist
+    SCREENSHOTPATH = "tmp/jenkins/screenshots"
+    SCREENSHOTURL = "tmp/jenkins/screenshots"
+    CAPTURESCREENSHOTONFAILURE = None
+    if not os.path.exists(SCREENSHOTPATH):
+        os.makedirs(SCREENSHOTPATH, 0o750)
