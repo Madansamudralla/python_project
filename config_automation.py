@@ -37,4 +37,4 @@ class Config:
     SCREENSHOTURL = "tmp/jenkins/screenshots"
     CAPTURESCREENSHOTONFAILURE = None
     if not os.path.exists(SCREENSHOTPATH):
-        os.makedirs(SCREENSHOTPATH, 0o750)
+        os.makedirs(SCREENSHOTPATH, 0o775)
