@@ -7,15 +7,16 @@ from core import merchant
 
 class Api:
 
-    def auth_header(self, id_account):
+    @staticmethod
+    def auth_header(id_account):
         """
         This function calculates the auth header key and value for REST API.
         :type id_account: int - Vendor account id.
         :return array - contains Avangate authHeader key and value
         """
         vendor = merchant.Merchant()
-        key = b'vendor.get_ipn_key(id_account)'
-        merchant_code = vendor.get_client_code(id_account)
+        key = b'vendor.get_account_details(id_account, key_name="IpNKey")'
+        merchant_code = vendor.get_account_details(id_account, key_name="ClientCode")
         date = strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
         string = (str(len(merchant_code))+merchant_code+str(len(date))+date).encode()
         hash_key = hmac.new(key, string)
