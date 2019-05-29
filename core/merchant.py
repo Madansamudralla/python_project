@@ -29,21 +29,3 @@ class Merchant:
 
         finally:
             self.CONN.connect_db().close()
-
-    def get_ipn_key(self, id_account):
-        """
-        Get IpnKey from accountsettings table.
-        :type id_account: int - Vendor account id.
-        :return array - returns IpNKey from accountsettings table.
-        """
-        try:
-            with self.CONN.connect_db().cursor() as cursor:
-                sql = "SELECT IpNKey FROM `accounts` " \
-                      "INNER JOIN `accountsettings` " \
-                      "ON accounts.`IdAccount`= `accountsettings`.`IdAccount` " \
-                      "WHERE accounts.`IdAccount`= " + str(id_account)
-                cursor.execute(sql)
-                result = cursor.fetchone()
-                return result[0]
-        finally:
-            self.CONN.connect_db().close()
