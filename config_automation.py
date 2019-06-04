@@ -28,8 +28,9 @@ class Config:
     CRON_USER = "www-data"
 
     USER = "automation"
-    PUBLIC_KEY = "/home/automation/www/automation/conf/automation_publicOpen"
-    PRIVATE_KEY = "/home/automation/www/automation/conf/automation_privateOpen"
+    # This are not use anymore.
+    # PUBLIC_KEY = "/home/automation/www/automation/conf/automation_publicOpen"
+    # PRIVATE_KEY = "/home/automation/www/automation/conf/automation_privateOpen"
 
     # Screenshots settings
     # Create a folder for failed screenshots if it doesn’t exist

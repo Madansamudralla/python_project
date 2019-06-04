@@ -28,7 +28,7 @@ def before_scenario(context, scenario):
         BROWSER = 'chrome'
 
     if BROWSER == 'chrome':
-        context.browser = webdriver.Chrome('.\chromedriver')
+        context.browser = webdriver.Chrome('./chromedriver')
     elif BROWSER == 'firefox':
         context.browser = webdriver.Firefox()
     elif BROWSER == 'safari':

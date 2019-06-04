@@ -1,9 +1,9 @@
 
 # Testing sandbox
-MY_HOST_NAME = "sandbox46"
+MY_HOST_NAME = "sandbox86"
 
 # Cron running configuration
-CRON_SANDBOX = "sandbox46"
+CRON_SANDBOX = "sandbox86"
 
 # DB connection settings
 
