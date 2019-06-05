@@ -1,5 +1,5 @@
-from core.db_connection import DbConnection
-from core.common.db_utilities import DbUtilities
+from core.lib.database.db_connection import DbConnection
+from core.lib.database.db_utilities import DbUtilities
 
 
 class Merchant:

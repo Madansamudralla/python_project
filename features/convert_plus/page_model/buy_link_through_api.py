@@ -1,4 +1,4 @@
-from core.api_builder import ApiBuilder
+from core.lib.api.api_builder import ApiBuilder
 
 
 class BuyLinkThroughApi:

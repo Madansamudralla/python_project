@@ -2,7 +2,7 @@ from time import strftime
 import hmac
 import requests
 import time
-from core import merchant
+from core.lib.common import merchant
 import json
 
 
