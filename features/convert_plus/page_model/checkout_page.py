@@ -3,13 +3,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from features.convert_plus.locators.checkout_page import CheckoutPageLocators
 from selenium.webdriver.common.keys import Keys
 from features.convert_plus.page_model.thank_you_page import ThankYouPage
+from core.lib.browser.browser import Browser
 
 
 class CheckoutPage:
     TIME_SEC = 30
 
-    def __init__(self, driver):
-        self.driver = driver
+    def __init__(self):
+        self.driver = Browser.get_instance().driver
 
     def wait_for_loader_to_disappear(self):
         WebDriverWait(self.driver, self.TIME_SEC).until(
@@ -41,8 +42,14 @@ class CheckoutPage:
         WebDriverWait(self.driver, self.TIME_SEC).until(
             EC.presence_of_element_located(CheckoutPageLocators.PANEL_CONFIRMATION_EMAIL_LOCATOR))
 
-    def the_finish_page_is_fully_loaded(self):
-        checkout = CheckoutPage(self.driver)
+    @staticmethod
+    def the_finish_page_is_fully_loaded():
+        checkout = CheckoutPage()
         checkout.wait_for_thank_you_message_to_appear()
-        thank_you_page = ThankYouPage(self.driver)
+        thank_you_page = ThankYouPage()
         thank_you_page.get_reference_number_from_finish_page()
+
+    def wait_for_checkout_page_to_load(self):
+        WebDriverWait(self.driver, 30).until(
+            EC.visibility_of_element_located(CheckoutPageLocators.PLACE_ORDER_BUTTON_LOCATOR)
+        )

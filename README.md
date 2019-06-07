@@ -36,8 +36,12 @@ all prerequisites::
 HOWTO
 ------------------------------------------------------------------------------
 
+Run `selenium`_ local::
+    
+    java - jar [selenium_version]
+
 Run `behave`_ tests::
 
-    behave -D BROWSER=chrome --tags @all -f json.pretty -o tmp/jenkins/behave_json.json
+    behave --tags @all -f json.pretty -o tmp/jenkins/behave_json.json
     python convert2cucumber.py tmp/jenkins/behave_json.json
 
