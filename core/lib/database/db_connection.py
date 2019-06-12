@@ -1,13 +1,17 @@
+import os
+
 import peewee
-import config_automation
-import automation_cnf
+
+from core import load_yaml
 
 
 class DbConnection:
     DB = None
+    DB_CONFIG_PATH = os.path.join(os.getcwd(), os.sep.join(['core', 'lib', 'database', 'config.yaml']))
+    DB_CONFIG = load_yaml(DB_CONFIG_PATH)
 
     def __init__(self):
-        self.DB = config_automation.Config.DB_ENVIRONMENT
+        self.DB = 'automation'
         self.connect_db()
 
     def connect_db(self):
@@ -15,11 +19,11 @@ class DbConnection:
         Establishing database connection.
         :return: Connection to automation DB.
         """
-        if self.DB != automation_cnf.DATABASE['AUTOMATION']['dbname']:
+        if self.DB not in self.DB_CONFIG:
             raise ValueError("Couldn't not find DB with given name.")
-        mysql = peewee.mysql.connect(host=automation_cnf.DATABASE['AUTOMATION']['host'],
-                                     user=automation_cnf.DATABASE['AUTOMATION']['user'],
-                                     password=automation_cnf.DATABASE['AUTOMATION']['password'],
-                                     db=automation_cnf.DATABASE['AUTOMATION']['dbname'],
+        mysql = peewee.mysql.connect(host=self.DB_CONFIG[self.DB]['host'],
+                                     user=self.DB_CONFIG[self.DB]['user'],
+                                     password=self.DB_CONFIG[self.DB]['password'],
+                                     db=self.DB_CONFIG[self.DB]['dbname'],
                                      charset='utf8', )
         return mysql

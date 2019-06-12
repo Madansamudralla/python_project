@@ -1,11 +1,10 @@
 from core.lib.api.api_builder import ApiBuilder
-from core.lib.browser.browser import Browser
+import core
 
 
 class BuyLinkThroughApi:
     BUY_LINK = None
-    URL = None
-    ID_ACCOUNT = 41764
+
     REQUEST_DATA_DEFAULT = {
         "data": [
             {
@@ -45,24 +44,28 @@ class BuyLinkThroughApi:
         ]
     }
 
-    def __init__(self):
+    def __init__(self, host, account_id):
+        self.host = host
+        self.account_id = account_id
         self.BUY_LINK = ApiBuilder()
 
     def buy_link_with_one_regular_product_on_default_template(self):
-        buy_link_with_one_regular_product_on_default_template = self.BUY_LINK.api_call("http://sandbox86.avangate.local"
-                                                      "/checkout/api/encrypt/generate/buy",
-                                                      "CONVERT_PLUS", "POST", self.REQUEST_DATA_DEFAULT, self.ID_ACCOUNT)
+        buy_link_with_one_regular_product_on_default_template = self.BUY_LINK.api_call(
+            f"{self.host}/checkout/api/encrypt/generate/buy",
+                                                      "CONVERT_PLUS", "POST", self.REQUEST_DATA_DEFAULT, self.account_id)
         return buy_link_with_one_regular_product_on_default_template["url"]
 
     def buy_link_with_one_regular_product_on_one_column_template(self):
         buy_link_with_one_regular_product_on_one_column_template = \
-            self.BUY_LINK.api_call("http://sandbox86.avangate.local/checkout/api/encrypt/generate/buy",
-                                   "CONVERT_PLUS", "POST", self.REQUEST_DATA_ONE_COLUMN, self.ID_ACCOUNT)
+            self.BUY_LINK.api_call(
+                f"{self.host}/checkout/api/encrypt/generate/buy",
+                                   "CONVERT_PLUS", "POST", self.REQUEST_DATA_ONE_COLUMN, self.account_id)
         return buy_link_with_one_regular_product_on_one_column_template["url"]
 
     def get_on_base_url(self, template):
         if template == "default":
-            self.URL = self.buy_link_with_one_regular_product_on_default_template()
+            url = self.buy_link_with_one_regular_product_on_default_template()
         elif template == "one-column":
-            self.URL = self.buy_link_with_one_regular_product_on_one_column_template()
-        Browser.get_instance().driver.get(self.URL)
+            url = self.buy_link_with_one_regular_product_on_one_column_template()
+        browser = core.get({'host': 'localhost', 'port': 4444}, delegator="chrome")
+        browser.driver.get(url)

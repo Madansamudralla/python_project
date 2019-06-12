@@ -3,14 +3,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from features.convert_plus.locators.checkout_page import CheckoutPageLocators
 from selenium.webdriver.common.keys import Keys
 from features.convert_plus.page_model.thank_you_page import ThankYouPage
-from core.lib.browser.browser import Browser
+import core
 
 
 class CheckoutPage:
-    TIME_SEC = 30
+    TIME_SEC = 5
 
     def __init__(self):
-        self.driver = Browser.get_instance().driver
+        self.driver = core.get({"host": "localhost", 'port': 4444}, delegator="chrome").driver
 
     def wait_for_loader_to_disappear(self):
         WebDriverWait(self.driver, self.TIME_SEC).until(

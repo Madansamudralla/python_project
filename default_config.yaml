@@ -1,0 +1,32 @@
+# Browser and Selenium setup
+selenium:
+  host: "localhost"
+  port: 4444
+
+# Database environment settings
+db_environment: 'automation'
+
+# URL configuration settings
+base_url: "http://sandbox.avangate.local"
+# BASE_URL = "http://" + automation_cnf.MY_HOST_NAME + ".avangate.local"
+# SHORT_BASE_URL = "http://" + automation_cnf.MY_HOST_NAME + ".avangate.local/l.php?link="
+# BASE_URL_INDEPENDENT = "http://processing." + automation_cnf.MY_HOST_NAME + ".avangate.local"
+# API_URL = "http://api." + automation_cnf.MY_HOST_NAME + ".avangate.local"
+# API_CART_URL = "http://cart." + automation_cnf.MY_HOST_NAME + ".avangate.local"
+# SIGNUP_API_URI = BASE_URL + "/api/private/2.5/rpc/"
+# IMPORT_MERCHANT_API_URI = BASE_URL + "/apimigration/"
+
+
+# Cron running configuration
+# CRON_HOST = automation_cnf.CRON_SANDBOX + ".avangate.local"
+# CRON_PATH = "/var/www/vhosts/" + automation_cnf.CRON_SANDBOX + ".avangate.local/htdocs/cron/"
+
+cron_path_customcarts: "/var/www/stage.sandbox/htdocs/cron/"
+cron_user: "www-data"
+user: "automation"
+
+# Screenshots settings
+screenshots_path: "tmp/jenkins/screenshots"
+screenshots_url: "tmp/jenkins/screenshots"
+
+screenshots: "tmp/jenkins/screenshots"

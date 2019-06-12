@@ -7,7 +7,6 @@ import json
 
 
 class ApiBuilder:
-    RESPONSE = None
 
     @staticmethod
     def set_auth_header(id_account, header_type):
@@ -58,22 +57,24 @@ class ApiBuilder:
         :return:
         :rtype: str
         """
-
+        supported_http_methods = ["POST", "GET", "PUT", "DELETE"]
+        if http_method not in supported_http_methods:
+            raise ValueError(f"'{http_method}' method is not supported: Current supported methods: "
+                             f"{supported_http_methods}")
         header = ApiBuilder.set_auth_header(id_account, header_type)
 
         if http_method is "POST":
-            self.RESPONSE = requests.post(host_url, data=json.dumps(request_data), headers=header)
+            response = requests.post(host_url, data=json.dumps(request_data), headers=header)
         elif http_method is "GET":
-            self.RESPONSE = requests.get(host_url, data=json.dumps(request_data), headers=header)
+            response = requests.get(host_url, data=json.dumps(request_data), headers=header)
         elif http_method is "PUT":
-            self.RESPONSE = requests.put(host_url, data=json.dumps(request_data), headers=header)
+            response = requests.put(host_url, data=json.dumps(request_data), headers=header)
         elif http_method is "DELETE":
-            self.RESPONSE = requests.delete(host_url, data=json.dumps(request_data), headers=header)
+            response = requests.delete(host_url, data=json.dumps(request_data), headers=header)
 
-        if (self.RESPONSE.content and self.RESPONSE.status_code) is None:
-            raise Exception("Request to: " + host_url + ", action: " +
-                            http_method + "failed with error: " + self.RESPONSE.status_code)
+        if (response.content and response.status_code) is None:
+            raise Exception(f"Request to: {host_url}, action: {http_method} failed with error: {response.status_code}")
         else:
-            response = self.RESPONSE.content.decode('utf8').replace("'", '"')
-            response = json.loads(response)
-            return response[0]
+            response_string = response.content
+            output_list = json.loads(response_string)
+            return output_list[0]

@@ -1,4 +1,4 @@
-from behave import *
+from behave import use_step_matcher, given, step, when, then
 from features.convert_plus.page_model.buy_link_through_api import BuyLinkThroughApi
 from features.convert_plus.page_model.checkout_page import CheckoutPage
 
@@ -12,8 +12,10 @@ def step_impl(context, template):
     :type template: str
     :type context: behave.runner.Context
     """
-    get_base_url = BuyLinkThroughApi()
+    get_base_url = BuyLinkThroughApi(host=context.configuration['base_url'],
+                                     account_id=context.configuration['account_id'])
     get_base_url.get_on_base_url(template)
+
 
 @step("I wait for checkout page to load")
 def step_impl(context):
