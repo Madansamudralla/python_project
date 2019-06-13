@@ -13,21 +13,21 @@ def before_all(context):
 
 
 def before_scenario(context, scenario):
-    context.configuration = CURRENT_CONFIG
-    resource = {"host": context.configuration['selenium']['host'],
-                "port":  context.configuration['selenium']['port']
+    context.current_config = CURRENT_CONFIG
+    resource = {"host": context.current_config['selenium']['host'],
+                "port":  context.current_config['selenium']['port']
                 }
     context.browser = core.get(resource, delegator="chrome")
 
 
 def after_scenario(context, scenario):
-    resource = {"host": context.configuration['selenium']['host'],
-                "port": context.configuration['selenium']['port']
+    resource = {"host": context.current_config['selenium']['host'],
+                "port": context.current_config['selenium']['port']
                 }
     if scenario.status == "failed":
         browser = core.get(resource, delegator="chrome")
         browser.driver.save_screenshot(
-            f"{context.configuration['screenshots']}/{scenario.name}_{time.strftime('%d-%m-%Y_%H-%M-%S')}.png")
+            f"{context.current_config['screenshots']}/{scenario.name}_{time.strftime('%d-%m-%Y_%H-%M-%S')}.png")
 
     core.remove(resource, delegator="chrome")
 

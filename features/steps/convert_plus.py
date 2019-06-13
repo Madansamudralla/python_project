@@ -12,8 +12,8 @@ def step_impl(context, template):
     :type template: str
     :type context: behave.runner.Context
     """
-    get_base_url = BuyLinkThroughApi(host=context.configuration['base_url'],
-                                     account_id=context.configuration['account_id'])
+    get_base_url = BuyLinkThroughApi(host=context.current_config['base_url'],
+                                     account_id=context.current_config['account_id'])
     get_base_url.get_on_base_url(template)
 
 

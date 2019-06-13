@@ -5,12 +5,15 @@ class DbUtilities:
 
     @staticmethod
     def fetch_assoc(key_name, results, row_headers):
-        """
-        Convert lists from db query response to dictionary object and return specific key value from it.
-        :type key_name: string - Key name for desired value.
-        :type results: list type object.
-        :type row_headers: list type object.
-        :return string value from dict type object or None if key not present in dict.
+        """ Convert DB query response to dictionary object and return specific key value from it.
+
+                args:
+                    :key_name: the table headers name returned by the query
+                    :results: list of db query response
+                    :row_headers: list of db query headers
+
+                :return string value from dict type object or None if key not present in dict.
+
         """
         json_data = []
         try:
