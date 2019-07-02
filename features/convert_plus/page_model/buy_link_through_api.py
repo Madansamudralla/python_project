@@ -1,6 +1,7 @@
-from core.lib.api.api_builder import ApiBuilder
+from core.api.api_builder import ApiBuilder
 import core
 
+from features.environment import resources
 
 class BuyLinkThroughApi:
     BUY_LINK = None
@@ -48,18 +49,21 @@ class BuyLinkThroughApi:
         self.host = host
         self.account_id = account_id
         self.BUY_LINK = ApiBuilder()
+        self.db_actor = core.get(core.res['mysql'], 'dbaccess')
+        self.merchant_code = self.db_actor.get_account_details(self.account_id, key_name="ClientCode")
 
     def buy_link_with_one_regular_product_on_default_template(self):
         buy_link_with_one_regular_product_on_default_template = self.BUY_LINK.api_call(
             f"{self.host}/checkout/api/encrypt/generate/buy",
-                                                      "CONVERT_PLUS", "POST", self.REQUEST_DATA_DEFAULT, self.account_id)
+                                                      "CONVERT_PLUS", "POST", self.REQUEST_DATA_DEFAULT, self.merchant_code)
         return buy_link_with_one_regular_product_on_default_template["url"]
 
     def buy_link_with_one_regular_product_on_one_column_template(self):
+
         buy_link_with_one_regular_product_on_one_column_template = \
             self.BUY_LINK.api_call(
                 f"{self.host}/checkout/api/encrypt/generate/buy",
-                                   "CONVERT_PLUS", "POST", self.REQUEST_DATA_ONE_COLUMN, self.account_id)
+                                   "CONVERT_PLUS", "POST", self.REQUEST_DATA_ONE_COLUMN, self.merchant_code)
         return buy_link_with_one_regular_product_on_one_column_template["url"]
 
     def get_on_base_url(self, template):
@@ -67,5 +71,5 @@ class BuyLinkThroughApi:
             url = self.buy_link_with_one_regular_product_on_default_template()
         elif template == "one-column":
             url = self.buy_link_with_one_regular_product_on_one_column_template()
-        browser = core.get({'host': 'localhost', 'port': 4444}, delegator="chrome")
-        browser.driver.get(url)
+        browser = core.get(core.res['chrome'], feature="browser")
+        browser.get_address(url)

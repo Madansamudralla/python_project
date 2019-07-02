@@ -11,21 +11,23 @@ class Singleton(type):
         return cls._instances[uniq_id]
 
 
-class BrowserManager(metaclass=Singleton):
+class ConnectionManager(metaclass=Singleton):
 
     def __init__(self):
         self._cache = {}
 
-    def get(self, cls, host, port):
+    def get(self, cls, **kwargs):
+        host = kwargs.get('host', 'localhost')
+        port = kwargs.get('port', 0)
         hash_id = (cls.__name__, host, port)
         exists = self._cache.get(hash_id, False)
 
         if not exists:
-            self._cache[hash_id] = cls(host, port)
+            self._cache[hash_id] = cls(**kwargs)
 
         return self._cache[hash_id]
 
-    def remove(self, cls, host, port):
+    def remove(self, cls, host, port=0):
         hash_id = (cls.__name__, host, port)
         exists = self._cache.get(hash_id, False)
 

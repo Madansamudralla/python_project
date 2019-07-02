@@ -10,7 +10,7 @@ class CheckoutPage:
     TIME_SEC = 5
 
     def __init__(self):
-        self.driver = core.get({"host": "localhost", 'port': 4444}, delegator="chrome").driver
+        self.driver = core.get(core.res['chrome'], feature="browser")._res.driver.webdriver
 
     def wait_for_loader_to_disappear(self):
         WebDriverWait(self.driver, self.TIME_SEC).until(
