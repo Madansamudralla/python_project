@@ -1,3 +1,0 @@
-merchant:
-  get_account_details: 'SELECT * FROM `accounts`
-  INNER JOIN `accountsettings` ON accounts.`IdAccount`= `accountsettings`.`IdAccount` WHERE accounts.`IdAccount`= %s'
