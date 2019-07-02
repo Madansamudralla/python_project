@@ -5,7 +5,7 @@ from importlib import import_module
 from core.resources import get_resource
 
 PACKAGE = 'core'
-CONTAINER = 'api'
+CONTAINER = 'modules'
 
 DEFAULT_CONFIG_PATH = "default_config.yaml"
 

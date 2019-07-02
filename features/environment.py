@@ -1,4 +1,6 @@
 import core
+import time
+
 from core.resources import get_resource
 from core import DEFAULT_CONFIG_PATH, load_custom_config
 CURRENT_CONFIG = {}
@@ -36,10 +38,8 @@ def before_scenario(context, scenario):
 
 def after_scenario(context, scenario):
     if scenario.status == "failed":
-        #browser = core.get(resource, delegator="chrome")
-        #browser.driver.save_screenshot(
-        #    f"{context.current_config['screenshots']}/{scenario.name}_{time.strftime('%d-%m-%Y_%H-%M-%S')}.png")
         browser = core.get(resources['chrome'], feature="browser")
+        browser._res.screenshot(f"/{scenario.name}_{time.strftime('%d-%m-%Y_%H-%M-%S')}.png")
         browser._res.restart_driver()
 
 

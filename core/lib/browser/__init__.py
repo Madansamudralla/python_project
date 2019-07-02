@@ -4,11 +4,12 @@ provides helpful methods that make working with Selnium easier.
 import os
 import datetime
 import logging
+import core
 
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 
+CURRENT_CONFIG = {}
 
 DEFAULT_TIMEOUT = 30
 
@@ -34,7 +35,8 @@ class WebCore:
         """
         self.currentpage = ""
         self.name = name
-        # TODO better logdir
+
+        # TODO better logdir and save screenshots in this dir
         log_dir = os.getcwd()
         self.download_dir = os.path.join(log_dir, "tmp", datetime.datetime.now().strftime("%d-%m-%Y@%H_%M"))
         if not os.path.exists(self.download_dir):
@@ -70,8 +72,6 @@ class WebCore:
             raise ValueError(f"Browser {browser} is not supported")
 
         self.webdriver.implicitly_wait(DEFAULT_TIMEOUT)
-        # self.webdriver.set_window_size(1920, 1080)
-        # self.webdriver.set_page_load_timeout(30)
         self.webdriver.maximize_window()
 
     def goto_address(self, address=" "):
@@ -82,15 +82,20 @@ class WebCore:
         """
         self.webdriver.get(address)
 
-    def screenshot(self, by=By.XPATH, path='/home/', value=None):
+    def save_screenshot(self, file_name):
         """Method to take screenshot
 
        args:
-           :by: Type of By check to pass to find_element
-           :value: String value
+           :file_name str: Name of screenshot, .png file.
        """
+        global CURRENT_CONFIG
+
+        CURRENT_CONFIG = core.load_yaml()
+        if 'screenshots_path' not in CURRENT_CONFIG:
+            raise ValueError("Screenshots path not given in yaml config file")
+        path = CURRENT_CONFIG['screenshots_path'] + file_name
         try:
-            self.webdriver.get_screenshot_as_file(path)
+            self.webdriver.save_screenshot(path)
         except Exception:
             logging.error("Could not take the screenshot and save it to path: {}".format(path))
             raise WebCoreException("Could not take the screenshot and save it to path: {}".format(path))

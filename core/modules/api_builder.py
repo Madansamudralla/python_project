@@ -9,7 +9,7 @@ import json
 class ApiBuilder:
 
     @staticmethod
-    def set_auth_header(merchant_code, header_type):
+    def set_x_avangate_auth_header(merchant_code, header_type):
         """Method to create X-Avangate-Authentication headers.
 
             args:
@@ -60,7 +60,7 @@ class ApiBuilder:
         if http_method not in supported_http_methods:
             raise ValueError(f"'{http_method}' method is not supported: Current supported methods: "
                              f"{supported_http_methods}")
-        header = ApiBuilder.set_auth_header(merchant_code, header_type)
+        header = ApiBuilder.set_x_avangate_auth_header(merchant_code, header_type)
 
         if http_method is "POST":
             response = requests.post(host_url, data=json.dumps(request_data), headers=header)
