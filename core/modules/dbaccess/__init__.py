@@ -1,7 +1,7 @@
 import json
 
 
-from core.api import GenericFeature
+from core.modules import GenericFeature
 
 
 class Dbaccess(GenericFeature):

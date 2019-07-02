@@ -5,15 +5,17 @@ from core.lib.database import DbConnection
 
 
 class Database(GenericResource):
-    """Database resource class is meant to represent a typical Unix/Linux resource.
+    """Database resource class is meant to represent a typical MySql resource.
     The following attributes are mandatory and must be passed via the testbed YAML file.
 
     attributes:
-        :ip: IP Address of the device
-        :user: Username
+        :host: Host Address of the database.
+        :port: Port of the database.
+        :user: Username of the database used for connection
+        :password: Password of the database used for connection.
     """
     def bootstrap(self):
-        """This method is used to establish the SSH connection to the device and fill up useful metadata related to
+        """This method is used to establish the connection to the device and fill up useful metadata related to
         the device.
 
         """
