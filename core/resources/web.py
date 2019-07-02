@@ -61,3 +61,11 @@ class Website(GenericResource):
         """
         connection_manager.remove(WebCore, self.browser, self.driver.name)
         self.driver.quit()
+
+    def screenshot(self, file_name):
+        """This method will save screenshot.
+
+            args:
+                :file_name str: Name of screenshot, .png file.
+       """
+        self.driver.save_screenshot(file_name=file_name)

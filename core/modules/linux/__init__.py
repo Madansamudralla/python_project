@@ -1,4 +1,4 @@
-from core.api import GenericFeature
+from core.modules import GenericFeature
 
 
 class Linux(GenericFeature):
