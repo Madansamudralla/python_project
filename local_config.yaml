@@ -1,5 +1,5 @@
-base_url: "http://sandbox86.avangate.local"
-account_id: 41764
+base_url: "http://sandbox46.avangate.local"
+api_cart_url: "http://sandbox86.avangate.local"
 
 resources:
   chrome:

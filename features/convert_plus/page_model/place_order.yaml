@@ -1,0 +1,9 @@
+data:
+- hostData:
+    name: ""
+    protocol: 'http:'
+  buyLinkData:
+    merchant: ""
+    tpl: ""
+    products:
+    - code: ""
