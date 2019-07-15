@@ -34,6 +34,49 @@ class Dbaccess(GenericFeature):
         else:
             return self.fetch_assoc(key_name, results, row_headers)
 
+    def get_product_status(self, id_account, product_code, key_name):
+        """ Get product status from products table.
+
+            args:
+                :id_acccount (int): Vendor ID account.
+                :product_code (str): Product code
+                : key_name (str): The table headers name returned by the query.
+
+            returns
+                An string contains product status.
+
+        """
+
+        query = f"SELECT ProductStatus FROM `products` WHERE IdAccount = " \
+            f"{id_account} AND ProductCode = '{product_code}'"
+
+        row_headers, results = self.send_query(query)
+
+        if self.fetch_assoc(key_name, results, row_headers) is None:
+            raise Exception("Incorrect or None IdAccount, search for ths Id in Database.")
+        else:
+            return self.fetch_assoc(key_name, results, row_headers)
+
+    def get_subscription_reference(self, licence_code, key_name):
+        """ Get subscription reference from licences table.
+
+            args:
+                :licence_code (str): Licence code
+                : key_name (str): The table headers name returned by the query.
+
+            returns
+                An string contains product status.
+
+        """
+        query = f"SELECT LicenceCode FROM `licences` WHERE LicenceCode = '{licence_code}'"
+
+        row_headers, results = self.send_query(query)
+
+        if self.fetch_assoc(key_name, results, row_headers) is None:
+            raise Exception("Incorrect or None LicenseCode, search for ths Id in Database.")
+        else:
+            return self.fetch_assoc(key_name, results, row_headers)
+
     def fetch_assoc(self, key_name, results, row_headers):
         """ Convert DB query response to dictionary object and return specific key value from it.
 

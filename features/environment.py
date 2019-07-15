@@ -37,10 +37,10 @@ def before_scenario(context, scenario):
 
 
 def after_scenario(context, scenario):
+    context.browser = core.get(resources['chrome'], feature="browser")
     if scenario.status == "failed":
-        browser = core.get(resources['chrome'], feature="browser")
-        browser._res.screenshot(f"/{scenario.name}_{time.strftime('%d-%m-%Y_%H-%M-%S')}.png")
-        browser._res.restart_driver()
+        context.browser._res.screenshot(f"/{scenario.name}_{time.strftime('%d-%m-%Y_%H-%M-%S')}.png")
+    context.browser._res.restart_driver()
 
 
 def after_all(context):

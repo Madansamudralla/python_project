@@ -33,8 +33,47 @@ class CheckoutPage:
         self.driver.find_element(*CheckoutPageLocators.CARD_SECURITY_CODE_INPUT_LOCATOR).send_keys(cvv)
         self.driver.find_element(*CheckoutPageLocators.NAME_INPUT_LOCATOR).send_keys('John Doe')
 
+    def fill_name(self, name):
+        self.driver.find_element(*CheckoutPageLocators.NAME_INPUT_LOCATOR).send_keys(name)
+
+    def fill_direct_debit_details(self, name, iban, swift_code):
+        self.fill_name(name)
+        self.driver.find_element(*CheckoutPageLocators.IBAN_INPUT_LOCATOR).send_keys(iban)
+        self.driver.find_element(*CheckoutPageLocators.SWIFT_CODE_INPUT_LOCATOR).send_keys(swift_code)
+
+    def fill_wire_transfer_details(self, name):
+        self.fill_name(name)
+
     def click_on_place_order(self):
         self.driver.find_element(*CheckoutPageLocators.PLACE_ORDER_BUTTON_LOCATOR).click()
+
+    def fill_billing_details(self, country, email, catalog_product_type, address=None, city=None, zip=None, phone=None):
+        self.fill_country(country)
+        self.wait_for_loader_to_disappear()
+        self.fill_email_address(email)
+        if catalog_product_type == 'physical':
+            self.driver.find_element(*CheckoutPageLocators.ADDRESS_INPUT_LOCATOR).send_keys(address)
+            self.driver.find_element(*CheckoutPageLocators.CITY_INPUT_LOCATOR).send_keys(city)
+            self.driver.find_element(*CheckoutPageLocators.ZIP_INPUT_LOCATOR).send_keys(zip)
+            self.driver.find_element(*CheckoutPageLocators.PHONE_INPUT_LOCATOR).send_keys(phone)
+
+    def select_direct_debit_as_a_payment_method(self):
+        self.driver.find_element(*CheckoutPageLocators.OTHER_BUTTON).click()
+        WebDriverWait(self.driver, self.TIME_SEC).until(
+            EC.presence_of_element_located(CheckoutPageLocators.PAYMENT_METHOD_DIRECT_DEBIT_LOCATOR))
+        self.driver.find_element(*CheckoutPageLocators.PAYMENT_METHOD_DIRECT_DEBIT_LOCATOR).click()
+
+    def select_wire_transfer_as_a_payment_method(self):
+        self.driver.find_element(*CheckoutPageLocators.OTHER_BUTTON).click()
+        WebDriverWait(self.driver, self.TIME_SEC).until(
+            EC.presence_of_element_located(CheckoutPageLocators.PAYMENT_METHOD_WIRE_TRANSFER_LOCATOR))
+        self.driver.find_element(*CheckoutPageLocators.PAYMENT_METHOD_WIRE_TRANSFER_LOCATOR).click()
+
+    def select_paypal_as_a_payment_method(self):
+        self.driver.find_element(*CheckoutPageLocators.OTHER_BUTTON).click()
+        WebDriverWait(self.driver, self.TIME_SEC).until(
+            EC.presence_of_element_located(CheckoutPageLocators.PAYMENT_METHOD_PAYPAL_LOCATOR))
+        self.driver.find_element(*CheckoutPageLocators.PAYMENT_METHOD_PAYPAL_LOCATOR).click()
 
     def wait_for_thank_you_message_to_appear(self):
         WebDriverWait(self.driver, self.TIME_SEC).until(
