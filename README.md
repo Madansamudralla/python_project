@@ -20,28 +20,11 @@ REPOSITORIES:
   * https://github.com/SeleniumHQ/selenium
   * https://github.com/paramiko/paramiko
   * https://github.com/kennethreitz/requests
-  * https://github.com/coleifer/peewee
 
 
 INSTALL
 ------------------------------------------------------------------------------
 
-To prepare the local installation, use the following command to install
-all prerequisites::
+To prepare the local installation follow this documentation:
 
-    pip install -r requirements.txt
-
-
-
-HOWTO
-------------------------------------------------------------------------------
-
-Run `selenium`_ local::
-    
-    java - jar [selenium_version]
-
-Run `behave`_ tests::
-
-    behave --tags @all -f json.pretty -o tmp/jenkins/behave_json.json
-    python convert2cucumber.py tmp/jenkins/behave_json.json
-
+https://avangate.atlassian.net/wiki/spaces/QA/pages/1219166209/Automation+framework+setup
