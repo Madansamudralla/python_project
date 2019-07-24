@@ -1,29 +1,2 @@
 base_url: "http://sandbox46.avangate.local"
 api_cart_url: "http://sandbox86.avangate.local"
-
-resources:
-  chrome:
-    type: Website
-    ip: localhost
-    port: 4444
-    browser: chrome
-
-  firefox:
-    type: Website
-    ip: localhost
-    port: 4444
-    browser: firefox
-
-#  linux:
-#    type: Unix
-#    ip: sandbox86.avangate.local
-#    user: www-data
-#    password: automation
-
-  mysql:
-    type: Database
-    ip: mysqldev.avangate.local
-    user: automation
-    password: withc--
-    port: 3306
-    db: automation
