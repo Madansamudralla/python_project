@@ -1,6 +1,9 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import logging
+
 from core.lib.gap.locators.login_page_loc import GapLoginPageLocators
+from selenium.common.exceptions import NoSuchElementException
 import core
 
 
@@ -9,8 +12,10 @@ class GapLogin:
     TIME_SEC = 5
 
     def __init__(self, host):
-        self.host = host
+
         self.driver = core.get(core.res['chrome'], feature="browser")._res.driver.webdriver
+        self.host = host
+        self.access_login_page()
 
     def access_login_page(self):
         """Method to get the current URL
@@ -18,42 +23,38 @@ class GapLogin:
         returns:
           URL as a String object if exist
         """
-        self.driver.get(self.host)
 
-    def enter_username(self, username):
-        """Method to fill username
+        self.driver.get(f"{self.host}/admin/")
 
-        args:
-          :username str: email or username
-        """
-        self.driver.find_element(*GapLoginPageLocators.USERNAME).send_keys(username)
-
-    def enter_password(self, password):
-        """Method to fill password
-
-        args:
-          :password str: user password
-        """
-        self.driver.find_element(*GapLoginPageLocators.PASSWORD).send_keys(password)
-
-    def click_login_button(self):
-        """Method to click on login button
+    def login_to_gap(self, username="automation", password="test123#"):
+        """Method to login to the GAP
 
         returns:
-          GAP home page when authentication successful
+          GAP home page when authentication successful otherwise throws exception
         """
+
+        try:
+            self.driver.find_element(*GapLoginPageLocators.USERNAME).is_displayed()
+        except NoSuchElementException:
+            logging.info("Username input field is not present in the page.")
+        logging.info(f"Send username to input field: {username}")
+        self.driver.find_element(*GapLoginPageLocators.USERNAME).send_keys(username)
+
+        try:
+            self.driver.find_element(*GapLoginPageLocators.PASSWORD).is_displayed()
+        except NoSuchElementException:
+            logging.info("Password input field is not present in the page.")
+        logging.info(f"Send password to input field: {password}")
+        self.driver.find_element(*GapLoginPageLocators.PASSWORD).send_keys(password)
+
+        logging.info(f"Click on login button.")
         self.driver.find_element(*GapLoginPageLocators.LOGIN_BUTTON).click()
+        logging.info(f"Wait for dashboard page to load.")
+        assert WebDriverWait(self.driver, self.TIME_SEC).until(
+            EC.presence_of_element_located(GapLoginPageLocators.SEARCH))
 
-        WebDriverWait(self.driver, self.TIME_SEC).until(
-            EC.presence_of_element_located(GapLoginPageLocators.MAINSCROLL_CONTAINER))
 
-        global_administration_panel = self.driver.find_element(*GapLoginPageLocators.MAINSCROLL_CONTAINER).text()
-        assert global_administration_panel == 'Avangate eCommerce - Global Administration Panel', \
-            'Login failed, please verify your login credentials.'
 
-    def login_to_gap(self, username, password):
-        """Method to login to the GAP"""
-        self.driver.get(self.host)
-        self.enter_username(username)
-        self.enter_password(password)
-        self.click_login_button()
+
+
+

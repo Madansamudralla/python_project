@@ -8,4 +8,4 @@ class GapLoginPageLocators:
     LOGIN_BUTTON = By.ID, 'Login'
 
     # Dashboard changes
-    MAINSCROLL_CONTAINER = By.LINK_TEXT, '_mainscroller_container'
+    SEARCH = By.ID, 'tiSearch'
