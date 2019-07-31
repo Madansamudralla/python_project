@@ -1,5 +1,5 @@
 from selenium.webdriver.common.keys import Keys
-from core.lib.gap.locators.dashboard_page import DashboardPageLocators
+from core.common.gap.locators.dashboard_page import DashboardPageLocators
 import core
 
 

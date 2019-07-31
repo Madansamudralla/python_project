@@ -1,4 +1,4 @@
-from core.lib.cpanel.locators.dashboard_page import DashboardPageLocators as DPL
+from core.common.cpanel.locators.dashboard_page import DashboardPageLocators as DPL
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import core
