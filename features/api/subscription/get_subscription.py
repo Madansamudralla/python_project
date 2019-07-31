@@ -1,10 +1,12 @@
 import core
 
-from core.modules.api_builder import ApiBuilder
+from core.modules.api.rest_client import RestClient
+from core.modules.api.rpc_client import RpcClient
 
 
 class GetSubscription:
-    CALL = None
+    REST_CALL = None
+    RPC_CALL = None
     ACCOUNT_ID = 41764
     SUBSCRIPTION_REFERENCE = "85419FDC8C"
 
@@ -14,14 +16,20 @@ class GetSubscription:
         self.db_actor = core.get(core.res['mysql'], feature="dbaccess")
         self.merchant_code = self.db_actor.get_account_details(self.account_id, key_name="ClientCode")
 
-        self.CALL = ApiBuilder()
+        self.REST_CALL = RestClient()
+        self.RPC_CALL = RpcClient()
 
     def get_subscription_reference(self, sub_ref):
         subscription_reference = self.db_actor.get_subscription_reference(
             self.SUBSCRIPTION_REFERENCE, key_name="LicenceCode")
         assert subscription_reference == sub_ref
 
-    def call_get_subscription(self, protocol, version, resource):
-        response = self.CALL.api_call(f"{self.host}/{protocol}/{version}/{resource}/{self.SUBSCRIPTION_REFERENCE}/",
-                                      "API", "GET", merchant_code=self.merchant_code)
+    def call_get_subscription_rest(self, version, resource):
+        response = self.REST_CALL.api_call(
+            f"{self.host}/rest/{version}/{resource}/{self.SUBSCRIPTION_REFERENCE}/", "GET"
+        )
+        return response
+
+    def call_get_subscription_rpc(self, version):
+        response = self.RPC_CALL.api_call("getSubscription", f"{self.host}/rpc/{version}/", self.SUBSCRIPTION_REFERENCE)
         return response

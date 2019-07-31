@@ -10,28 +10,43 @@ use_step_matcher("re")
 def step_impl(context, subscription):
     """
     :type context: behave.runner.Context
-    :type status: str
+    :type subscription: str
     """
     call = GetSubscription(host=context.current_config['base_url'])
     context.subscription = call.get_subscription_reference(subscription)
 
 
-@when('i make a getSubscription call on "(.*)" with "(.*)" and "(.*)"')
-def step_impl(context, protocol, version, resource):
+@when('i make a getSubscription call on rest with "(.*)" and "(.*)"')
+def step_impl(context, version, resource):
     """
     :type context: behave.runner.Context
-    :type protocol: str
     :type version: str
     :type resource: str
     """
     call = GetSubscription(host=context.current_config['base_url'])
-    context.response = call.call_get_subscription(protocol, version, resource)
+    context.rest_response = call.call_get_subscription_rest(version, resource)
 
 
-@step("the RecurringEnabled equal true")
+@when('i make a getSubscription call on rpc on version "(.*)"')
+def step_impl(context, version):
+    """
+    :type context: behave.runner.Context
+    :type version: str
+    """
+    call = GetSubscription(host=context.current_config['base_url'])
+    context.rpc_response = call.call_get_subscription_rpc(version)
+
+
+@step("the RecurringEnabled equals true")
 def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    response = json.loads(context.response.content)
+    if hasattr(context, 'rest_response'):
+        response = json.loads(context.rest_response.content)
+    elif hasattr(context, 'rpc_response'):
+        response = json.loads(context.rpc_response.content)['result']
+    else:
+        raise Exception("The response has not been correctly fetched.")
+
     assert response['RecurringEnabled'] is True

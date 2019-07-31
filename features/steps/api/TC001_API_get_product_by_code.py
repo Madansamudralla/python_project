@@ -14,16 +14,25 @@ def step_impl(context, status):
     call.see_product_status(status)
 
 
-@when('i make a getProductByCode call on "(.*)" with "(.*)" and "(.*)"')
-def step_impl(context, protocol, version, resource):
+@when('i make a getProductByCode call on rest with "(.*)" and "(.*)"')
+def step_impl(context, version, resource):
     """
     :type context: behave.runner.Context
-    :type protocol: str
     :type version: str
     :type resource: str
     """
     call = GetProductByCode(host=context.current_config['base_url'])
-    context.response = call.call_get_product_by_code(protocol, version, resource)
+    context.rest_response = call.get_product_by_code_rest(version, resource)
+
+
+@when('i make a getProductByCode call on rpc on version "(.*)"')
+def step_impl(context, version):
+    """
+    :type context: behave.runner.Context
+    :type version: str
+    """
+    call = GetProductByCode(host=context.current_config['base_url'])
+    context.rpc_response = call.get_product_by_code_rpc(version)
 
 
 @then("the http status code is 200")
@@ -31,5 +40,7 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    assert context.response.status_code == 200
-
+    if hasattr(context, 'rest_response'):
+        assert context.rest_response.status_code == 200
+    elif hasattr(context, 'rpc_response'):
+        assert context.rpc_response.status_code == 200
