@@ -7,3 +7,4 @@ mysql
 behave2cucumber
 pyyaml
 mysqlclient==1.3.12
+zeep

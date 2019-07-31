@@ -82,6 +82,4 @@ class ApiBuilder:
             raise Exception(f"Request to: {host_url}, action: {http_method} failed with error: {response.status_code}")
         else:
             return response
-            # response_string = response.content
-            # output_list = json.loads(response_string)
-            # return output_list
+
