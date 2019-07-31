@@ -9,114 +9,102 @@ class DashboardPage:
         self.host = host
         self.driver = core.get(core.res['chrome'], feature="browser")._res.driver.webdriver
 
-    #Home tab
     def go_to_home_dashboard(self):
         """Method to go on HOME dashboard link
 
         returns:
             Home page
         """
-        self.driver.find_element(*DashboardPageLocators.HOME_DASHBOARD_LINKTEXT).click()
+        self.driver.find_element(*DashboardPageLocators.HOME_TAB_DASHBOARD).click()
 
-    #Merchants tab
     def go_to_merchants_dashboard(self):
         """Method to go on Merchants dashboard link
 
         returns:
             Merchants page
         """
-        self.driver.find_element(*DashboardPageLocators.MERCHANTS_DASHBOARD_LINKTEXT).click()
+        self.driver.find_element(*DashboardPageLocators.MERCHANTS_TAB_DASHBOARD).click()
 
-    #Affiliates tab
     def go_to_affiliates_dashboard(self):
         """Method to go on Affiliates dashboard link
 
         returns:
             Affiliates page
         """
-        self.driver.find_element(*DashboardPageLocators.AFFILIATES_DASHBOARD_LINKTEXT).click()
+        self.driver.find_element(*DashboardPageLocators.AFFILIATES_TAB_DASHBOARD).click()
 
-    #Online Orders tab
     def go_to_online_orders_dashboard(self):
         """Method to go on Online Orders dashboard link
 
         returns:
             Online Orders
         """
-        self.driver.find_element(*DashboardPageLocators.ONLINE_ORDERS_DASHBOARD_LINKTEXT).click()
+        self.driver.find_element(*DashboardPageLocators.ONLINE_ORDERS_TAB_DASHBOARD).click()
 
-    #Transactions tab
     def go_to_transactions_dashboard(self):
         """Method to go on Transactions dashboard link
 
         returns:
             Transactions page
         """
-        self.driver.find_element(*DashboardPageLocators.TRANSACTIONS_DASHBOARD_LINKTEXT).click()
+        self.driver.find_element(*DashboardPageLocators.TRANSACTIONS_TAB_DASHBOARD).click()
 
-    # Accounting tab
     def go_to_accounting_dashboard(self):
         """Method to go on Accounting dashboard link
 
         returns:
             Accounting page
         """
-        self.driver.find_element(*DashboardPageLocators.ACCOUNTING_DASHBOARD_LINKTEXT).click()
+        self.driver.find_element(*DashboardPageLocators.ACCOUNTING_TAB_DASHBOARD).click()
 
-    #Reports tab
     def go_to_reports_dashboard(self):
         """Method to go on Reports dashboard link
 
         returns:
             Reports page
         """
-        self.driver.find_element(*DashboardPageLocators.REPORTS_DASHBOARD_LINKTEXT).click()
+        self.driver.find_element(*DashboardPageLocators.REPORTS_TAB_DASHBOARD).click()
 
-    #Tools tab
     def go_to_tools_dashboard(self):
         """Method to go on Tools dashboard link
 
         returns:
             Tools page
         """
-        self.driver.find_element(*DashboardPageLocators.TOOLS_DASHBOARD_LINKTEXT).click()
+        self.driver.find_element(*DashboardPageLocators.TOOLS_TAB_DASHBOARD).click()
 
-    #Settings tab
     def go_to_settings_dashboard(self):
         """Method to go on Settings dashboard link
 
         returns:
             Settings page
         """
-        self.driver.find_element(*DashboardPageLocators.SETTINGS_DASHBOARD_LINKTEXT).click()
-    #Search tab
+        self.driver.find_element(*DashboardPageLocators.SETTINGS_TAB_DASHBOARD).click()
+
     def go_to_search_dashboard(self):
         """Method to go on Search dashboard link
 
         returns:
             Search page
         """
-        self.driver.find_element(*DashboardPageLocators.SEARCH_DASHBOARD_LINKTEXT).click()
+        self.driver.find_element(*DashboardPageLocators.SEARCH_TAB_DASHBOARD).click()
 
-    #Errors tab
     def go_to_errors_dashboard(self):
         """Method to go on Errors dashboard link
 
         returns:
             Errors page
         """
-        self.driver.find_element(*DashboardPageLocators.ERRORS_DASHBOARD_LINKTEXT).click()
+        self.driver.find_element(*DashboardPageLocators.ERRORS_TAB_DASHBOARD).click()
 
-    #Vendor Alerts tab
     def go_to_vendor_alerts_dashboard(self):
         """Method to go on Vendor Alerts dashboard link
 
         returns:
             Vendor Alerts page
         """
-        self.driver.find_element(*DashboardPageLocators.VENDOR_DASHBOARD_ALERTS_LINKTEXT).click()
+        self.driver.find_element(*DashboardPageLocators.VENDOR_TAB_DASHBOARD_ALERTS).click()
 
-    #SEARCH GAP
     def fill_gap_search_for_something(self, gapsearch):
         """Method to go on SEARCH GAP dashboard link
 

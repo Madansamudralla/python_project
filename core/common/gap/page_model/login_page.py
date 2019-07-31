@@ -2,7 +2,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import logging
 
-from core.common.gap.locators.login_page_loc import GapLoginPageLocators
+from core.common.gap.locators.login_page import GapLoginPageLocators
+from core.common.gap.locators.dashboard_page import DashboardPageLocators
 from selenium.common.exceptions import NoSuchElementException
 import core
 
@@ -51,7 +52,7 @@ class GapLogin:
         self.driver.find_element(*GapLoginPageLocators.LOGIN_BUTTON).click()
         logging.info(f"Wait for dashboard page to load.")
         assert WebDriverWait(self.driver, self.TIME_SEC).until(
-            EC.presence_of_element_located(GapLoginPageLocators.SEARCH))
+            EC.presence_of_element_located(DashboardPageLocators.GAP_SEARCH_INPUT))
 
 
 
