@@ -2,7 +2,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import logging
 
-from core.common.gap.locators.login_page import GapLoginPageLocators
+from core.common.gap.locators.login.login_page import GapLoginPageLocators
 from core.common.gap.locators.dashboard_page import DashboardPageLocators
 from selenium.common.exceptions import NoSuchElementException
 import core
