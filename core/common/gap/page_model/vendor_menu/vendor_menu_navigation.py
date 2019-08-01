@@ -1,8 +1,9 @@
-from features.internal.locators.vendor_menu_page_loc import VendorMenuPageLocators
+from core.common.gap.locators.vendor_menu.vendor_menu_navigation_loc import VendorMenuPageLocators
 import core
 
 
 class VendorMenuPage:
+    """This class allows to navigate into the Vendor Menu Navigation"""
 
     def __init__(self, host):
         self.host = host
