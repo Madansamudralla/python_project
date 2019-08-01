@@ -7,11 +7,31 @@ from core.modules import GenericFeature
 class Dbaccess(GenericFeature):
     """Dbaccess defines the interface to execute actions on a SQL server.
     """
-    def send_query(self, query):
+    def get_records(self, query):
+        """ Get information from accounts and accountsettings tables.
+
+            args:
+                :query (str): MySQL query to update records.
+
+            returns
+                An array contains headers table.
+                An array contains query result.
+
+        """
         self._res.db.cursor.execute(query)
         row_headers = [x[0] for x in self._res.db.cursor.description]  # this will extract row headers
         results = self._res.db.cursor.fetchall()
         return row_headers, results
+
+    def update_records(self, query):
+        """ Get information from accounts and accountsettings tables.
+
+            args:
+                :query (str): MySQL query to update records.
+
+        """
+        self._res.db.cursor.execute(query)
+        self._res.db.cursor.connection.commit()
 
     def get_account_details(self, id_account, key_name):
         """ Get information from accounts and accountsettings tables.
