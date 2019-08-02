@@ -31,4 +31,3 @@ class VendorMenuPageLocators:
     # Underwriting
     ACCOUNT_STATUS_LINKTEXT = By.LINK_TEXT, 'Account status'
     ACCOUNT_LINKING_TOOL_LINKTEXT = By.LINK_TEXT, 'Account linking tool'
-
