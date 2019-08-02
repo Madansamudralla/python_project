@@ -47,7 +47,7 @@ class Dbaccess(GenericFeature):
 
         query = f"SELECT * FROM `accounts` INNER JOIN `accountsettings` ON accounts.`IdAccount`= " \
                 f"`accountsettings`.`IdAccount` WHERE accounts.`IdAccount`= {id_account}"
-        row_headers, results = self.send_query(query)
+        row_headers, results = self.get_records(query)
 
         if self.fetch_assoc(key_name, results, row_headers) is None:
             raise Exception("Incorrect or None IdAccount, search for ths Id in Database.")
@@ -70,7 +70,7 @@ class Dbaccess(GenericFeature):
         query = f"SELECT ProductStatus FROM `products` WHERE IdAccount = " \
             f"{id_account} AND ProductCode = '{product_code}'"
 
-        row_headers, results = self.send_query(query)
+        row_headers, results = self.get_records(query)
 
         if self.fetch_assoc(key_name, results, row_headers) is None:
             raise Exception("Incorrect or None IdAccount, search for ths Id in Database.")
@@ -90,7 +90,7 @@ class Dbaccess(GenericFeature):
         """
         query = f"SELECT LicenceCode FROM `licences` WHERE LicenceCode = '{licence_code}'"
 
-        row_headers, results = self.send_query(query)
+        row_headers, results = self.get_records(query)
 
         if self.fetch_assoc(key_name, results, row_headers) is None:
             raise Exception("Incorrect or None LicenseCode, search for ths Id in Database.")
