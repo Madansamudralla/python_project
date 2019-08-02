@@ -41,6 +41,7 @@ class RestClient(APIClient):
         if http_method not in supported_http_methods:
             raise ValueError(f"'{http_method}' method is not supported: Current supported methods: "
                              f"{supported_http_methods}")
+
         header = RestClient.rest_login_headers(self)
 
         if http_method is "POST":

@@ -11,7 +11,7 @@ def step_impl(context, status):
     :type status: str
     """
     call = GetProductByCode(host=context.current_config['base_url'])
-    call.see_product_status(status)
+    call.get_product_status_db(call.DIGITAL_PRODUCT, status)
 
 
 @when('i make a getProductByCode call on rest with "(.*)" and "(.*)"')
@@ -41,6 +41,6 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     if hasattr(context, 'rest_response'):
-        assert context.rest_response.status_code == 200
+        assert context.rest_response.status_code == 200, f"Expected: 200, Actual: {context.rest_response.status_code}"
     elif hasattr(context, 'rpc_response'):
-        assert context.rpc_response.status_code == 200
+        assert context.rpc_response.status_code == 200, f"Expected: 200, Actual: {context.rest_response.status_code}"
