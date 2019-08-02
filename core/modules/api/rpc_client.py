@@ -52,11 +52,11 @@ class RpcClient(APIClient):
             The response dictionary that the server returns.
         """
         session_id = self.rpc_login(host)
-
+        params.insert(0, session_id)
         json_rpc_request = {
             'jsonrpc': '2.0',
             'method': method,
-            'params': [session_id, params],
+            'params': params,
             'id': self.ID
         }
 

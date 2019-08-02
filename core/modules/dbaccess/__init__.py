@@ -77,6 +77,24 @@ class Dbaccess(GenericFeature):
         else:
             return self.fetch_assoc(key_name, results, row_headers)
 
+    def set_product_status(self, id_account, product_code, status):
+        """ Set product status from products table.
+
+            args:
+                :id_acccount (int): Vendor ID account.
+                :product_code (str): Product code
+                :status (str): Can be set to either "ENABLED" or "DISABLED"
+
+            returns
+                An string contains product status.
+
+        """
+
+        query = f"UPDATE `products` SET ProductStatus = '{status}' WHERE IdAccount = {id_account} AND ProductCode = " \
+                f"'{product_code}' "
+
+        self.update_records(query)
+
     def get_subscription_reference(self, licence_code, key_name):
         """ Get subscription reference from licences table.
 
