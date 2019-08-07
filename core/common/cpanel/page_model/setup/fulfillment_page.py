@@ -1,0 +1,1 @@
+from core.common.cpanel.locators.setup.fulfillment_page_loc import FulfillmentPage

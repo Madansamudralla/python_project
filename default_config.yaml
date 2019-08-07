@@ -7,7 +7,7 @@
 db_environment: 'automation'
 
 # URL configuration settings
-base_url: "http://sandbox64.avangate.local"
+base_url: "http://sandbox46.avangate.local"
 api_cart_url: "http://sandbox86.avangate.local"
 # BASE_URL = "http://" + MY_HOST_NAME + ".avangate.local"
 # SHORT_BASE_URL = "http://" + MY_HOST_NAME + ".avangate.local/l.php?link="

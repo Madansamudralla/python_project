@@ -7,11 +7,31 @@ from core.modules import GenericFeature
 class Dbaccess(GenericFeature):
     """Dbaccess defines the interface to execute actions on a SQL server.
     """
-    def send_query(self, query):
+    def get_records(self, query):
+        """ Get information from accounts and accountsettings tables.
+
+            args:
+                :query (str): MySQL query to update records.
+
+            returns
+                An array contains headers table.
+                An array contains query result.
+
+        """
         self._res.db.cursor.execute(query)
         row_headers = [x[0] for x in self._res.db.cursor.description]  # this will extract row headers
         results = self._res.db.cursor.fetchall()
         return row_headers, results
+
+    def update_records(self, query):
+        """ Get information from accounts and accountsettings tables.
+
+            args:
+                :query (str): MySQL query to update records.
+
+        """
+        self._res.db.cursor.execute(query)
+        self._res.db.cursor.connection.commit()
 
     def get_account_details(self, id_account, key_name):
         """ Get information from accounts and accountsettings tables.
@@ -27,7 +47,7 @@ class Dbaccess(GenericFeature):
 
         query = f"SELECT * FROM `accounts` INNER JOIN `accountsettings` ON accounts.`IdAccount`= " \
                 f"`accountsettings`.`IdAccount` WHERE accounts.`IdAccount`= {id_account}"
-        row_headers, results = self.send_query(query)
+        row_headers, results = self.get_records(query)
 
         if self.fetch_assoc(key_name, results, row_headers) is None:
             raise Exception("Incorrect or None IdAccount, search for ths Id in Database.")
@@ -50,12 +70,32 @@ class Dbaccess(GenericFeature):
         query = f"SELECT ProductStatus FROM `products` WHERE IdAccount = " \
             f"{id_account} AND ProductCode = '{product_code}'"
 
-        row_headers, results = self.send_query(query)
+        row_headers, results = self.get_records(query)
 
         if self.fetch_assoc(key_name, results, row_headers) is None:
             raise Exception("Incorrect or None IdAccount, search for ths Id in Database.")
         else:
             return self.fetch_assoc(key_name, results, row_headers)
+
+    def set_product_status(self, id_account, product_code, status):
+        """ Set product status from products table.
+
+            args:
+                :id_acccount (int): Vendor ID account.
+                :product_code (str): Product code
+                :status (str): Can be set to either "ENABLED" or "DISABLED"
+
+            returns
+                An string contains product status.
+
+        """
+
+        query = f"UPDATE `products`" \
+                f" SET ProductStatus = '{status}' " \
+                f" WHERE IdAccount = {id_account}" \
+                f" AND ProductCode = '{product_code}' "
+
+        self.update_records(query)
 
     def get_subscription_reference(self, licence_code, key_name):
         """ Get subscription reference from licences table.
@@ -70,7 +110,7 @@ class Dbaccess(GenericFeature):
         """
         query = f"SELECT LicenceCode FROM `licences` WHERE LicenceCode = '{licence_code}'"
 
-        row_headers, results = self.send_query(query)
+        row_headers, results = self.get_records(query)
 
         if self.fetch_assoc(key_name, results, row_headers) is None:
             raise Exception("Incorrect or None LicenseCode, search for ths Id in Database.")

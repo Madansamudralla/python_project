@@ -1,0 +1,1 @@
+from core.common.cpanel.locators.setup.price_lists_page_loc import PriceListsPage
