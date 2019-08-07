@@ -1,3 +1,5 @@
+import json
+
 from behave import use_step_matcher, given, step, when, then
 from features.api.products.get_product_by_code import GetProductByCode
 

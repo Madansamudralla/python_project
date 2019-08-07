@@ -90,8 +90,10 @@ class Dbaccess(GenericFeature):
 
         """
 
-        query = f"UPDATE `products` SET ProductStatus = '{status}' WHERE IdAccount = {id_account} AND ProductCode = " \
-                f"'{product_code}' "
+        query = f"UPDATE `products`" \
+                f" SET ProductStatus = '{status}' " \
+                f" WHERE IdAccount = {id_account}" \
+                f" AND ProductCode = '{product_code}' "
 
         self.update_records(query)
 
